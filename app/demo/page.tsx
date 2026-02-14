@@ -5,7 +5,7 @@
  * Allows users to select and visualize different algorithms and data structures
  */
 
-import { useState, useEffect } from 'react';
+import { Suspense, useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import { useAnimationStore } from '@/lib/stores/animationStore';
@@ -95,7 +95,7 @@ const mockAlgorithm: Algorithm = {
   spaceComplexity: { best: 'O(1)', average: 'O(1)', worst: 'O(1)', explanation: '' },
 };
 
-export default function DemoPage() {
+function DemoPageContent() {
   const searchParams = useSearchParams();
   const algorithmFromUrl = searchParams.get('algorithm') as AlgorithmType | null;
   
@@ -1136,5 +1136,19 @@ export default function DemoPage() {
         </div>
       </div>
     </main>
+  );
+}
+
+export default function DemoPage() {
+  return (
+    <Suspense
+      fallback={
+        <main className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 p-8">
+          <div className="max-w-[1400px] mx-auto text-cyan-200">Loading demo...</div>
+        </main>
+      }
+    >
+      <DemoPageContent />
+    </Suspense>
   );
 }

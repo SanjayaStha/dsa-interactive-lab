@@ -205,6 +205,8 @@ export function ExplanationPanel({ step, isPlaying, selectedAlgorithm }: Explana
     });
   };
 
+  if (!step) return null;
+
   useEffect(() => {
     const currentStepNode = stepItemRefs.current[currentStepIndex];
     if (!currentStepNode) return;
@@ -253,8 +255,6 @@ export function ExplanationPanel({ step, isPlaying, selectedAlgorithm }: Explana
         return 'from-cyan-500 to-purple-500';
     }
   };
-
-  if (!step) return null;
 
   return (
     <div
